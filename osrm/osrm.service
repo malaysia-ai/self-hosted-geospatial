@@ -1,0 +1,19 @@
+# Systemd service file for osrm daemon 
+
+[Unit]
+Description=label-studio daemon service for ubuntu user
+After=syslog.target network.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+Environment="file=malaysia-singapore-brunei-latest"
+
+ExecStart=cd osrm && podman run -t -i -p 5000:5000 -v "${PWD}:/data" osrm/osrm-backend osrm-routed --algorithm mld /data/${file}.osrm
+ExecReload=/bin/kill -HUP $MAINPID
+
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=default.target
