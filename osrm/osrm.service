@@ -9,7 +9,7 @@ User=ubuntu
 Group=ubuntu
 Environment="file=malaysia-singapore-brunei-latest"
 
-ExecStart=cd osrm && podman run -t -i -p 5000:5000 -v "${PWD}:/data" osrm/osrm-backend osrm-routed --algorithm mld /data/${file}.osrm
+ExecStart=podman run -t -i -p 5000:5000 -v "/home/ubuntu/osrm:/data" osrm/osrm-backend osrm-routed --algorithm mld /data/${file}.osrm
 ExecReload=/bin/kill -HUP $MAINPID
 
 KillMode=process
